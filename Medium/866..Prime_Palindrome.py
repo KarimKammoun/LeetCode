@@ -1,22 +1,38 @@
-class Solution:
-    def isPrime(self, num):
-        from math import sqrt
-        if num < 2 or num % 2 == 0:
-            return num == 2
-        for i in range(3, int(sqrt(num)) + 1, 2):
-            if num % i == 0:
-                return False
-        return True
-
+class Solution(object):
     def primePalindrome(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        ch=str(n)
+        def premier(x):
+            if x < 2:
+                return False
+            if x == 2:
+                return True
+            if x % 2 == 0:
+                return False
+            for i in range(3, int(x**0.5) + 1, 2):
+                if x % i == 0:
+                    return False
+            return True
         if 8 <= n <= 11:
             return 11
-        if len(str(n)) % 2 == 0:
-            limit = pow(10, len(str(n)) // 2)
+        if n<=2:
+            return 2
+        if n==5:
+            return 5
+        if n==7:
+            return 7
+
+        if (len(ch)%2)==0:
+            l=10**((len(ch)//2)-1)
         else:
-            n_string = str(n)
-            limit = n_string[:len(str(n)) // 2 + 1]
-        for i in range(int(limit), 20000):
-            y = int(str(i) + str(i)[:-1][::-1])
-            if y >= n and self.isPrime(y):
-                return y
+            l=10**(len(ch)//2)
+        while True:
+            ch=str(l)
+            if premier(int(ch + ch[:-1][::-1]))== True and (int(ch + ch[:-1][::-1]))>=n :
+                return int(ch + ch[:-1][::-1])
+            if premier(int(ch + ch[::-1]))==True and (int(ch + ch[:-1][::-1]))>=n:
+                return int(ch + ch[::-1])
+            l=l+1
